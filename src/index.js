@@ -7,6 +7,7 @@ import { BrowserRouter, Switch, Redirect, Route } from 'react-router-dom'
 import reducers from './reducer'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
+import './config'
 
 const store = createStore(reducers, compose(
 	applyMiddleware(thunk),
