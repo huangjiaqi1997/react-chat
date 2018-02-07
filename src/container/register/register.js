@@ -18,14 +18,14 @@ class Login extends React.Component {
       repeatPwd: ''
     }
     this.handleChange = this.handleChange.bind(this)
-    this.handleClick = this.handleClick.bind(this)
+    this.handleRegister = this.handleRegister.bind(this)
   }
 
   handleChange(key, value) {
     this.setState({ [key]: value })
   }
 
-  handleClick() {
+  handleRegister() {
     this.props.register(this.state)
   }
 
@@ -47,7 +47,7 @@ class Login extends React.Component {
           <RadioItem checked={this.state.type === 'boss'} onChange={() => this.handleChange('type', 'boss')}>BOSS</RadioItem>
         </List>
         <WhiteSpace></WhiteSpace>
-        <Button type='primary' onClick={this.handleClick}>注册</Button>
+        <Button type='primary' onClick={this.handleRegister}>注册</Button>
       </div>
     )
   }

@@ -35,12 +35,12 @@ export const register = ({name, pwd, repeatPwd, type}) => {
   }
 
   return dispatch => {
-    axios.post('/user/register', {name, pwd, repeatPwd, type})
+    axios.post('/user/register', {name, pwd, type})
       .then(res => {
         if (res.status === 200 && res.data.code === 0) {
-          return registerSuccess(res.data.data)
+          dispatch(registerSuccess(res.data.data))
         } else {
-          return errMsg(res.msg)
+          dispatch(errMsg(res.data.msg))
         }
       })
   }
