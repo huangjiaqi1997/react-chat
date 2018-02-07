@@ -1,16 +1,47 @@
-const LOGIN = 'LOGIN'
-const LOGOUT = 'LOGOUT'
+import axios from 'axios'
 
-export const user = (state={user: 'huangjiaqi', auth: false}, action) => {
+const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
+const ERR_MSG = 'ERR_MSG'
+
+const initialState = {
+  name: '',
+  isAuth: false,
+  pwd: '',
+  type: '',
+  msg: ''
+}
+
+export const user = (state = initialState, action) => {
   switch(action.type) {
-    case LOGIN:
-      return {...state, auth: true}
-    case LOGOUT:
-      return {...state, auth: false}
+    case REGISTER_SUCCESS:
+      return { ...state, isAuth: true, msg: '', ...action.payload }
+    case ERR_MSG:
+      return { ...state, isAuth: false, msg: action.msg }
     default:
       return state
   }
 }
 
-export const login = () => ({ type: LOGIN })
-export const logout = () => ({ type: LOGOUT })
+export const registerSuccess = (payload) => ({ type: REGISTER_SUCCESS, data: payload })
+const errMsg = (msg) => ({ msg, type: ERR_MSG })
+
+export const register = ({name, pwd, repeatPwd, type}) => {
+  // 表单填写验证
+  if (!name || !pwd) {
+    return errMsg('用户名密码必须填写')
+  }
+  if (pwd !== repeatPwd) {
+    return errMsg('两次密码输入不一致')
+  }
+
+  return dispatch => {
+    axios.post('/user/register', {name, pwd, repeatPwd, type})
+      .then(res => {
+        if (res.status === 200 && res.data.code === 0) {
+          return registerSuccess(res.data.data)
+        } else {
+          return errMsg(res.msg)
+        }
+      })
+  }
+}
