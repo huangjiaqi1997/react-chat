@@ -1,8 +1,14 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import axios from 'axios'
 import { withRouter } from 'react-router-dom'
+import { userInfo } from '../../redux/user.redux'
 
 @withRouter
+@connect(
+  null,
+  { userInfo }
+)
 class AuthRoute extends React.Component {
   componentDidMount() {
     // 排除 在 /login /register 的情况
@@ -18,7 +24,7 @@ class AuthRoute extends React.Component {
         if (res.status === 200) {
 
           if (res.data.code === 0) {
-            // 有登录信息
+            this.props.userInfo(res.data.data)
           } else {
             this.props.history.push('/login')
           }
