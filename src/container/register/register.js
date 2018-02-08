@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import Logo from '../../component/logo/logo'
 import { WingBlank, WhiteSpace, List, InputItem, Radio, Button } from 'antd-mobile'
 import { register } from '../../redux/user.redux'
+import { Redirect } from 'react-router-dom'
 
 @connect(
   state => state.user,
@@ -34,6 +35,8 @@ class Login extends React.Component {
 
     return (
       <div>
+        {/* 注册后 根据 res 信息进行跳转 */}
+        { this.props.redirectTo ? <Redirect to={this.props.redirectTo} /> : null }
         <Logo></Logo>
         <h2>登录</h2>
         <List renderHeader={() => this.props.msg}>
