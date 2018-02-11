@@ -59,5 +59,22 @@ Router.post('/login', (req, res) => {
   })
 })
 
+Router.post('/update', (req, res) => {
+  const userId = req.cookies.userId
+  
+  if (!userId) return json.dump({ code: 1 })
+  else {
+    User.findByIdAndUpdate(userId, req.body, (err, doc) => {
+      const data = Object.assign({}, {
+        name: doc.name,
+        type: doc.type
+      }, req.body)
+
+      return res.json({ code: 0, data })
+    })
+    
+  }
+})
+
 
 module.exports = Router

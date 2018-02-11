@@ -10,19 +10,20 @@ import './config'
 import AuthRoute from './component/authRoute/authRoute'
 import Login from './container/login/login'
 import Register from './container/register/register'
+import BossInfo from './container/bossInfo/bossInfo'
 
 
 const store = createStore(reducer, compose(
 	applyMiddleware(thunk),
 	window.devToolsExtension ? window.devToolsExtension() : f => f
 ))
-const Boss = () => <h1>Boss</h1>
+
 ReactDOM.render(
 	<Provider store={store}>
 		<BrowserRouter>
 			<div>
 				<AuthRoute></AuthRoute>
-				<Route path="/boss" component={Boss}></Route>
+				<Route path="/bossinfo" component={BossInfo}></Route>
 				<Route path="/login" component={Login}></Route>
 				<Route path="/register" component={Register}></Route>
 			</div>
